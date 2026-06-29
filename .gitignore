@@ -5,3 +5,7 @@ venv/
 logs/*.log
 .env
 .DS_Store
+
+# Raw downloaded imports
+data/imports/
+backups/

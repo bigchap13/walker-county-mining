@@ -41,12 +41,84 @@ def all_records():
 def search_records(q):
     q = (q or "").strip().lower()
     if not q:
-        return all_records()
+        return []
 
-    return [
-        item for item in all_records()
-        if q in json.dumps(item, ensure_ascii=False).lower()
-    ]
+    results = []
+
+    for mine in load_json(REGISTRIES["mines"]):
+        text = " ".join([
+            str(mine.get("name", "")),
+            str(mine.get("county", "")),
+            str(mine.get("operator", "")),
+            str(mine.get("controller", "")),
+            str(mine.get("nearest_town", "")),
+            str(mine.get("mine_type", "")),
+            str(mine.get("status", "")),
+        ]).lower()
+
+        if q in text:
+            results.append({
+                "app": "mining",
+                "id": mine.get("id"),
+                "title": mine.get("name"),
+                "type": "Mine",
+                "summary": mine.get("summary") or f"{mine.get('name')} is an Alabama mine record.",
+                "url": f"http://127.0.0.1:5084/mine/{mine.get('id')}",
+                "tags": [
+                    "alabama-mining-encyclopedia",
+                    "mine",
+                    str(mine.get("county", "")).lower(),
+                    str(mine.get("mine_type", "")).lower(),
+                    str(mine.get("status", "")).lower(),
+                ],
+            })
+
+    for company in company_index():
+        text = f"{company.get('name', '')} {company.get('count', '')}".lower()
+        if q in text:
+            results.append({
+                "app": "mining",
+                "id": company.get("slug"),
+                "title": company.get("name"),
+                "type": "Mining Company",
+                "summary": f"{company.get('name')} is linked to {company.get('count')} Alabama mine records.",
+                "url": f"http://127.0.0.1:5084/company/{company.get('slug')}",
+                "tags": ["alabama-mining-encyclopedia", "company", "operator", "controller"],
+            })
+
+    for county in county_index():
+        text = f"{county.get('name', '')} {county.get('count', '')}".lower()
+        if q in text:
+            results.append({
+                "app": "mining",
+                "id": county.get("slug"),
+                "title": f"{county.get('name')} County",
+                "type": "Mining County",
+                "summary": f"{county.get('name')} County has {county.get('count')} Alabama mine records.",
+                "url": f"http://127.0.0.1:5084/county/{county.get('slug')}",
+                "tags": ["alabama-mining-encyclopedia", "county"],
+            })
+
+    for camp in load_json(REGISTRIES["coal_camps"]):
+        text = " ".join([
+            str(camp.get("name", "")),
+            str(camp.get("county", "")),
+            str(camp.get("company", "")),
+            str(camp.get("summary", "")),
+        ]).lower()
+
+        if q in text:
+            results.append({
+                "app": "mining",
+                "id": camp.get("id"),
+                "title": camp.get("name"),
+                "type": "Coal Camp",
+                "summary": camp.get("summary"),
+                "url": f"http://127.0.0.1:5084/coal-camp/{camp.get('id')}",
+                "tags": ["alabama-mining-encyclopedia", "coal-camp", str(camp.get("county", "")).lower()],
+            })
+
+    return results[:200]
 
 
 def _coord_value(record, keys):

@@ -88,6 +88,11 @@ def _extract_coords(record):
     return None
 
 
+def _valid_alabama_coord(lat, lon):
+    # Rough Alabama bounding box. Prevents bad MSHA values like latitude 0.x or 38.x from plotting.
+    return 30.0 <= lat <= 35.2 and -88.6 <= lon <= -84.7
+
+
 def mine_map_points():
     points = []
     for item in load_json(REGISTRIES["mines"]):
@@ -96,6 +101,8 @@ def mine_map_points():
             continue
 
         lat, lon = coords
+        if not _valid_alabama_coord(lat, lon):
+            continue
         points.append({
             "id": item.get("id"),
             "name": item.get("name"),

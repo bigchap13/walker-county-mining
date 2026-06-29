@@ -14,7 +14,7 @@ async function loadMineMapStatus() {
   document.getElementById("mineList").innerHTML = points.map(p => `
     <div class="map-record">
       <strong>${p.name}</strong>
-      <small>${p.lat.toFixed(5)}, ${p.lon.toFixed(5)}</small>
+      <small>${p.county || "Alabama"} • ${p.lat.toFixed(5)}, ${p.lon.toFixed(5)}</small>
     </div>
   `).join("");
 }

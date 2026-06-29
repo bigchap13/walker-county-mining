@@ -3,15 +3,11 @@ import json
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
-ATLAS_ROOT = Path.home() / "walker-county-atlas"
 
 REGISTRIES = {
     "mines": ROOT / "data/mines/mine_registry.json",
     "companies": ROOT / "data/companies/company_registry.json",
-    "coal_camps": ROOT / "data/coal_camps/coal_camp_registry.json",
-    "railroads": ROOT / "data/railroads/railroad_registry.json",
-    "disasters": ROOT / "data/disasters/disaster_registry.json",
-    "maps": ROOT / "data/maps/mine_map_source_index.json",
+    "counties": ROOT / "data/counties/county_index.json",
     "sources": ROOT / "data/sources/source_index.json",
 }
 
@@ -20,7 +16,8 @@ def load_json(path):
     if not path.exists():
         return []
     try:
-        return json.loads(path.read_text())
+        data = json.loads(path.read_text())
+        return data if isinstance(data, list) else []
     except Exception:
         return []
 
@@ -45,36 +42,10 @@ def search_records(q):
     if not q:
         return all_records()
 
-    results = []
-    for item in all_records():
-        text = json.dumps(item, ensure_ascii=False).lower()
-        if q in text:
-            results.append(item)
-    return results
-
-
-def _find_atlas_record(atlas_id):
-    if not atlas_id:
-        return None
-
-    registry = ATLAS_ROOT / "data" / "registry"
-    if not registry.exists():
-        return None
-
-    for p in registry.rglob("*.json"):
-        if "_before_" in p.name:
-            continue
-        try:
-            data = json.loads(p.read_text())
-        except Exception:
-            continue
-
-        records = data if isinstance(data, list) else [data]
-        for rec in records:
-            if isinstance(rec, dict) and rec.get("id") == atlas_id:
-                return rec
-
-    return None
+    return [
+        item for item in all_records()
+        if q in json.dumps(item, ensure_ascii=False).lower()
+    ]
 
 
 def _coord_value(record, keys):
@@ -89,9 +60,6 @@ def _coord_value(record, keys):
 
 
 def _extract_coords(record):
-    if not isinstance(record, dict):
-        return None
-
     lat = _coord_value(record, ["lat", "latitude", "Latitude"])
     lon = _coord_value(record, ["lon", "lng", "longitude", "Longitude"])
 
@@ -99,6 +67,7 @@ def _extract_coords(record):
         return lat, lon
 
     coords = record.get("coordinates") or record.get("coords") or record.get("location")
+
     if isinstance(coords, dict):
         lat = _coord_value(coords, ["lat", "latitude", "Latitude"])
         lon = _coord_value(coords, ["lon", "lng", "longitude", "Longitude"])
@@ -119,53 +88,30 @@ def _extract_coords(record):
     return None
 
 
-def true_mine_map_points():
+def mine_map_points():
     points = []
     for item in load_json(REGISTRIES["mines"]):
         coords = _extract_coords(item)
         if not coords:
             continue
+
         lat, lon = coords
         points.append({
             "id": item.get("id"),
             "name": item.get("name"),
             "operator": item.get("operator"),
-            "type": item.get("type"),
+            "company": item.get("company"),
+            "county": item.get("county"),
+            "state": item.get("state", "Alabama"),
+            "mine_type": item.get("mine_type") or item.get("type"),
+            "status": item.get("status"),
             "summary": item.get("summary"),
             "lat": lat,
             "lon": lon,
             "source": item.get("source"),
+            "source_url": item.get("source_url"),
             "research_status": item.get("research_status"),
         })
-    return points
-
-
-def mining_map_points():
-    points = []
-
-    for item in load_json(REGISTRIES["coal_camps"]):
-        atlas_id = item.get("atlas_place_id")
-        atlas_record = _find_atlas_record(atlas_id)
-        coords = _extract_coords(atlas_record or {})
-
-        if not coords:
-            continue
-
-        lat, lon = coords
-        points.append({
-            "id": item.get("id"),
-            "name": item.get("name"),
-            "type": item.get("type"),
-            "summary": item.get("summary"),
-            "lat": lat,
-            "lon": lon,
-            "atlas_place_id": atlas_id,
-            "atlas_url": item.get("atlas_url"),
-            "almanac_url": item.get("almanac_url"),
-            "research_status": item.get("research_status"),
-            "source": "Walker County Atlas coordinates + Walker County Almanac mining-linked record",
-        })
-
     return points
 
 
@@ -180,10 +126,6 @@ def create_app():
     def index():
         return render_template("index.html", counts=registry_counts())
 
-    @app.route("/map")
-    def map_page():
-        return render_template("map.html")
-
     @app.route("/mine-map")
     def mine_map_page():
         return render_template("mine_map.html")
@@ -192,22 +134,19 @@ def create_app():
     def api_status():
         return jsonify({
             "app": "Alabama Mine Map",
-            "status": "foundation",
+            "status": "mines_only_foundation",
             "port": 5084,
-            "counts": registry_counts()
+            "scope": "All Alabama mines, past and present. Source-backed mine records only.",
+            "counts": registry_counts(),
         })
 
     @app.route("/api/search")
     def api_search():
         return jsonify(search_records(request.args.get("q", "")))
 
-    @app.route("/api/map-points")
-    def api_map_points():
-        return jsonify(mining_map_points())
-
     @app.route("/api/mine-map-points")
     def api_mine_map_points():
-        return jsonify(true_mine_map_points())
+        return jsonify(mine_map_points())
 
     @app.route("/health")
     def health():

@@ -59,6 +59,12 @@
         {% endfor %}
       </section>
 
+      <section class="card wide" id="relatedPanel">
+        <span>Related Records</span>
+        <h2 id="relatedTitle">Related across ecosystem</h2>
+        <div id="relatedResults"></div>
+      </section>
+
       <section class="card wide">
         <span>Sources</span>
         {% for source in camp.sources or [] %}
@@ -76,5 +82,9 @@
       </section>
     {% endif %}
   </main>
+  <script src="/static/js/detail_related.js"></script>
+  <script>
+    loadDetailRelated("{{ camp.name if camp else '' }}", window.location.href);
+  </script>
 </body>
 </html>

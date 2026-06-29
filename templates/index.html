@@ -18,7 +18,16 @@
       <h1>Alabama Mining Encyclopedia</h1>
       <p>A phone-first reference system for Alabama mines, companies, counties, mine maps, MSHA records, and mining history.</p>
 
-      <div class="home-actions">
+      
+<section class="card map-controls">
+<input id="globalSearch"
+type="search"
+placeholder="Search mines, companies, coal camps...">
+<div id="searchResults"></div>
+</section>
+
+<div class="home-actions">
+
         <a class="button-link" href="/mine-map">Open Mine Map</a>
         <a class="button-link" href="/counties">Browse Counties</a>
         <a class="button-link" href="/companies">Browse Companies</a>
@@ -78,5 +87,6 @@
       <p>This project uses source-backed mine records only. Community locations are not used as mine-location substitutes.</p>
     </section>
   </main>
+<script src="/static/js/search.js"></script>
 </body>
 </html>

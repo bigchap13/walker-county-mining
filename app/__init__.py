@@ -214,6 +214,56 @@ def find_coal_camp(camp_id):
     return None
 
 
+def global_search(query):
+    q = str(query or "").strip().lower()
+    if not q:
+        return []
+
+    results = []
+
+    for m in load_json(REGISTRIES["mines"]):
+        text = " ".join([
+            str(m.get("name","")),
+            str(m.get("nearest_town","")),
+            str(m.get("county","")),
+            str(m.get("operator","")),
+            str(m.get("controller",""))
+        ]).lower()
+
+        if q in text:
+            results.append({
+                "type":"Mine",
+                "title":m.get("name"),
+                "subtitle":m.get("county"),
+                "url":f"/mine/{m.get('id')}"
+            })
+
+    for c in company_index():
+        if q in c["name"].lower():
+            results.append({
+                "type":"Company",
+                "title":c["name"],
+                "subtitle":f'{c["count"]} mine records',
+                "url":f'/company/{c["slug"]}'
+            })
+
+    for camp in load_json(REGISTRIES["coal_camps"]):
+        text = " ".join([
+            str(camp.get("name","")),
+            str(camp.get("county","")),
+            str(camp.get("company",""))
+        ]).lower()
+
+        if q in text:
+            results.append({
+                "type":"Coal Camp",
+                "title":camp.get("name"),
+                "subtitle":camp.get("county"),
+                "url":f'/coal-camp/{camp.get("id")}'
+            })
+
+    return results[:200]
+
 def company_stats(records):
     counties = {}
     statuses = {}

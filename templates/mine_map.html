@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Walker County Mine Location Map</title>
+  <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="circle linkcircle" href="/">‹</a>
+    <strong>Mine Location Map</strong>
+    <span class="circle">⛏️</span>
+  </header>
+
+  <main>
+    <section class="hero map-hero">
+      <p class="eyebrow">Exact Mine Locations</p>
+      <h1>Mine Location Map</h1>
+      <p>This layer only uses exact mine names with sourced coordinates. Community locations are excluded.</p>
+    </section>
+
+    <section class="card">
+      <span>Mine Records</span>
+      <h2 id="mineCount">Checking...</h2>
+      <p id="mineNote">Loading exact mine-location records.</p>
+      <div id="mineList"></div>
+    </section>
+  </main>
+
+  <script src="/static/js/mine_map.js"></script>
+</body>
+</html>

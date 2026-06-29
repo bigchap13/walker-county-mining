@@ -119,6 +119,27 @@ def _extract_coords(record):
     return None
 
 
+def true_mine_map_points():
+    points = []
+    for item in load_json(REGISTRIES["mines"]):
+        coords = _extract_coords(item)
+        if not coords:
+            continue
+        lat, lon = coords
+        points.append({
+            "id": item.get("id"),
+            "name": item.get("name"),
+            "operator": item.get("operator"),
+            "type": item.get("type"),
+            "summary": item.get("summary"),
+            "lat": lat,
+            "lon": lon,
+            "source": item.get("source"),
+            "research_status": item.get("research_status"),
+        })
+    return points
+
+
 def mining_map_points():
     points = []
 
@@ -163,6 +184,10 @@ def create_app():
     def map_page():
         return render_template("map.html")
 
+    @app.route("/mine-map")
+    def mine_map_page():
+        return render_template("mine_map.html")
+
     @app.route("/api/status")
     def api_status():
         return jsonify({
@@ -179,6 +204,10 @@ def create_app():
     @app.route("/api/map-points")
     def api_map_points():
         return jsonify(mining_map_points())
+
+    @app.route("/api/mine-map-points")
+    def api_mine_map_points():
+        return jsonify(true_mine_map_points())
 
     @app.route("/health")
     def health():

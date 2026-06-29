@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ mine.name if mine else "Mine Not Found" }} | Alabama Mine Map</title>
+  <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="circle linkcircle" href="/mine-map">‹</a>
+    <strong>Mine Detail</strong>
+    <span class="circle">⛏️</span>
+  </header>
+
+  <main>
+    {% if not mine %}
+      <section class="hero">
+        <p class="eyebrow">Not found</p>
+        <h1>Mine not found</h1>
+        <p>No source-backed mine record matched that ID.</p>
+      </section>
+    {% else %}
+      <section class="hero">
+        <p class="eyebrow">{{ mine.county }} County, Alabama</p>
+        <h1>{{ mine.name }}</h1>
+        <p>{{ mine.summary }}</p>
+      </section>
+
+      <section class="grid">
+        <div class="card">
+          <span>Status</span>
+          <h2>{{ mine.status or "Unknown" }}</h2>
+        </div>
+        <div class="card">
+          <span>Mine Type</span>
+          <h2>{{ mine.mine_type or mine.type or "Unknown" }}</h2>
+        </div>
+        <div class="card">
+          <span>Operator</span>
+          <h2>{{ mine.operator or "Unknown" }}</h2>
+        </div>
+        <div class="card">
+          <span>MSHA ID</span>
+          <h2>{{ mine.msha_mine_id or mine.id }}</h2>
+        </div>
+      </section>
+
+      <section class="card wide">
+        <span>Location</span>
+        <h2>{{ mine.latitude }}, {{ mine.longitude }}</h2>
+        <p>County: {{ mine.county }}. State: Alabama.</p>
+      </section>
+
+      <section class="card wide">
+        <span>Source</span>
+        <h2>{{ mine.source or "MSHA Mines Dataset" }}</h2>
+        {% if mine.source_url %}
+          <a class="button-link" href="{{ mine.source_url }}">Open Source</a>
+        {% endif %}
+      </section>
+    {% endif %}
+  </main>
+</body>
+</html>

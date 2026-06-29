@@ -93,6 +93,13 @@ def _valid_alabama_coord(lat, lon):
     return 30.0 <= lat <= 35.2 and -88.6 <= lon <= -84.7
 
 
+def find_mine_record(mine_id):
+    for item in load_json(REGISTRIES["mines"]):
+        if item.get("id") == mine_id:
+            return item
+    return None
+
+
 def mine_map_points():
     points = []
     for item in load_json(REGISTRIES["mines"]):
@@ -136,6 +143,20 @@ def create_app():
     @app.route("/mine-map")
     def mine_map_page():
         return render_template("mine_map.html")
+
+    @app.route("/mine/<mine_id>")
+    def mine_detail_page(mine_id):
+        mine = find_mine_record(mine_id)
+        if not mine:
+            return render_template("mine_detail.html", mine=None), 404
+        return render_template("mine_detail.html", mine=mine)
+
+    @app.route("/api/mine/<mine_id>")
+    def api_mine_detail(mine_id):
+        mine = find_mine_record(mine_id)
+        if not mine:
+            return jsonify({"error": "mine not found"}), 404
+        return jsonify(mine)
 
     @app.route("/api/status")
     def api_status():

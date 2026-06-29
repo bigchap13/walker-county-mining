@@ -44,6 +44,7 @@ function popupHtml(p) {
     ${p.company ? `<p><strong>Company:</strong> ${p.company}</p>` : ""}
     ${p.status ? `<p><strong>Status:</strong> ${p.status}</p>` : ""}
     ${p.id ? `<p><strong>ID:</strong> ${p.id}</p>` : ""}
+    ${p.id ? `<a href="/mine/${p.id}">Open Mine Detail</a><br>` : ""}
     ${p.source_url ? `<a href="${p.source_url}">Source</a>` : ""}
   `;
 }
@@ -104,6 +105,11 @@ function renderMap() {
       const p = points.find(x => x.id === row.dataset.id);
       if (!p) return;
       map.setView([p.lat, p.lon], 14);
+      const target = clusterLayer.getLayers().find(marker => {
+        const ll = marker.getLatLng();
+        return Math.abs(ll.lat - p.lat) < 0.000001 && Math.abs(ll.lng - p.lon) < 0.000001;
+      });
+      if (target) target.openPopup();
     });
   });
 

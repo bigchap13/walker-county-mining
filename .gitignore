@@ -9,3 +9,4 @@ logs/*.log
 # Raw downloaded imports
 data/imports/
 backups/
+logs/

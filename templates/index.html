@@ -14,39 +14,63 @@
 
   <main>
     <section class="hero">
-      <p class="eyebrow">Source-backed mine registry</p>
+      <p class="eyebrow">Source-backed statewide mining reference</p>
       <h1>Alabama Mining Encyclopedia</h1>
-      <p>All Alabama mines, past and present. Exact mine records only. No community-center placeholders.</p>
-      <a class="button-link" href="/mine-map">Open Mine Location Map</a> <a class="button-link" href="/counties">Open County Index</a> <a class="button-link" href="/companies">Open Company Index</a>
+      <p>A phone-first reference system for Alabama mines, companies, counties, mine maps, MSHA records, and mining history.</p>
+
+      <div class="home-actions">
+        <a class="button-link" href="/mine-map">Open Mine Map</a>
+        <a class="button-link" href="/counties">Browse Counties</a>
+        <a class="button-link" href="/companies">Browse Companies</a>
+      </div>
     </section>
 
     <section class="grid">
       <div class="card">
         <span>Mine Records</span>
         <h2>{{ counts.mines }}</h2>
-        <p>Exact mine names and locations only when source-backed.</p>
+        <p>Source-backed Alabama mine records.</p>
       </div>
+
       <div class="card">
         <span>Companies</span>
         <h2>{{ counts.companies }}</h2>
-        <p>Operators and mining companies linked to mine records.</p>
+        <p>Operators and controllers connected to mines.</p>
       </div>
+
       <div class="card">
         <span>Counties</span>
         <h2>{{ counts.counties }}</h2>
-        <p>County filters for statewide Alabama coverage.</p>
+        <p>County coverage from the active registry.</p>
       </div>
+
       <div class="card">
         <span>Sources</span>
         <h2>{{ counts.sources }}</h2>
-        <p>Every mine record must point to a source.</p>
+        <p>Source records supporting the encyclopedia.</p>
       </div>
+    </section>
+
+    <section class="card wide">
+      <span>Primary Sections</span>
+      <a class="map-record mine-row" href="/mine-map">
+        <strong>Mine Map</strong>
+        <small>Interactive clustered map of coordinate-backed mine records.</small>
+      </a>
+      <a class="map-record mine-row" href="/counties">
+        <strong>County Encyclopedia</strong>
+        <small>Mine totals, status groups, operators, and records by county.</small>
+      </a>
+      <a class="map-record mine-row" href="/companies">
+        <strong>Company Encyclopedia</strong>
+        <small>Operators and controllers linked to Alabama mine records.</small>
+      </a>
     </section>
 
     <section class="card wide">
       <span>Rule</span>
       <h2>No placeholders</h2>
-      <p>This repository is not for communities that had mines. It is for the mines themselves: mine name, operator, county, coordinates when available, status, and source.</p>
+      <p>This project uses source-backed mine records only. Community locations are not used as mine-location substitutes.</p>
     </section>
   </main>
 </body>

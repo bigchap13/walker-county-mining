@@ -350,3 +350,15 @@ input {
 .mine-row:hover{
     opacity:.88;
 }
+
+.home-actions{
+  display:grid;
+  gap:10px;
+  margin-top:18px;
+}
+
+@media (min-width: 720px){
+  .home-actions{
+    grid-template-columns: repeat(3, 1fr);
+  }
+}

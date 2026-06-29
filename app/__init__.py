@@ -38,6 +38,54 @@ def all_records():
     return records
 
 
+def fast_hub_search(q):
+    q = (q or "").strip().lower()
+    if not q:
+        return []
+
+    results = []
+    mines = load_json(REGISTRIES["mines"])
+    camps = load_json(REGISTRIES["coal_camps"])
+
+    for mine in mines:
+        title = str(mine.get("name", ""))
+        county = str(mine.get("county", ""))
+        town = str(mine.get("nearest_town", ""))
+        operator = str(mine.get("operator", ""))
+
+        hay = f"{title} {county} {town} {operator}".lower()
+        if q in hay:
+            results.append({
+                "app": "mining",
+                "id": mine.get("id"),
+                "title": title,
+                "type": "Mine",
+                "summary": mine.get("summary") or f"{title} is an Alabama mine record.",
+                "url": f"http://127.0.0.1:5084/mine/{mine.get('id')}",
+                "tags": ["alabama-mining-encyclopedia", "mine", county.lower()],
+            })
+            if len(results) >= 30:
+                return results
+
+    for camp in camps:
+        title = str(camp.get("name", ""))
+        county = str(camp.get("county", ""))
+        company = str(camp.get("company", ""))
+        hay = f"{title} {county} {company}".lower()
+        if q in hay:
+            results.append({
+                "app": "mining",
+                "id": camp.get("id"),
+                "title": title,
+                "type": "Coal Camp",
+                "summary": camp.get("summary"),
+                "url": f"http://127.0.0.1:5084/coal-camp/{camp.get('id')}",
+                "tags": ["alabama-mining-encyclopedia", "coal-camp", county.lower()],
+            })
+
+    return results[:40]
+
+
 def search_records(q):
     q = (q or "").strip().lower()
     if not q:
@@ -552,6 +600,10 @@ def create_app():
     @app.route("/api/search")
     def api_search():
         return jsonify(search_records(request.args.get("q", "")))
+
+    @app.route("/api/hub-search")
+    def api_hub_search():
+        return jsonify(fast_hub_search(request.args.get("q", "")))
 
     @app.route("/api/mine-map-points")
     def api_mine_map_points():

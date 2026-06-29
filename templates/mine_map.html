@@ -6,6 +6,8 @@
   <title>Alabama Mine Map</title>
   <link rel="stylesheet" href="/static/css/style.css">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css">
 </head>
 <body>
   <header class="topbar">
@@ -18,7 +20,7 @@
     <section class="hero map-hero">
       <p class="eyebrow">Exact mine locations</p>
       <h1>Alabama Mine Map</h1>
-      <p>This map plots only sourced mine names and mine coordinates. Communities are excluded.</p>
+      <p>Clustered source-backed Alabama mine records. Zoom in to separate individual mines.</p>
     </section>
 
     <section class="card map-controls">
@@ -47,6 +49,7 @@
   </main>
 
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
   <script src="/static/js/mine_map.js"></script>
 </body>
 </html>

@@ -6,8 +6,16 @@ L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
 }).addTo(map);
 
 let allPoints = [];
-let markers = [];
 let bounds = [];
+
+const clusterLayer = L.markerClusterGroup({
+  showCoverageOnHover: false,
+  spiderfyOnMaxZoom: true,
+  maxClusterRadius: 52,
+  disableClusteringAtZoom: 14
+});
+
+map.addLayer(clusterLayer);
 
 function statusColor(status) {
   const s = (status || "").toLowerCase();
@@ -15,6 +23,16 @@ function statusColor(status) {
   if (s.includes("nonproducing")) return "#f1c40f";
   if (s.includes("abandoned")) return "#e74c3c";
   return "#95a5a6";
+}
+
+function markerIcon(p) {
+  const color = statusColor(p.status);
+  return L.divIcon({
+    className: "mine-marker",
+    html: `<span style="background:${color}"></span>`,
+    iconSize: [18, 18],
+    iconAnchor: [9, 9]
+  });
 }
 
 function popupHtml(p) {
@@ -58,30 +76,21 @@ function currentFilteredPoints() {
 function renderMap() {
   const points = currentFilteredPoints();
 
-  for (const marker of markers) {
-    map.removeLayer(marker);
-  }
-
-  markers = [];
+  clusterLayer.clearLayers();
   bounds = [];
 
   for (const p of points) {
-    const marker = L.circleMarker([p.lat, p.lon], {
-      radius: 7,
-      weight: 2,
-      color: statusColor(p.status),
-      fillColor: statusColor(p.status),
-      fillOpacity: 0.78
+    const marker = L.marker([p.lat, p.lon], {
+      icon: markerIcon(p)
     }).bindPopup(popupHtml(p));
 
-    marker.addTo(map);
-    markers.push(marker);
+    clusterLayer.addLayer(marker);
     bounds.push([p.lat, p.lon]);
   }
 
   document.getElementById("mineCount").textContent = `${points.length} exact mines plotted`;
   document.getElementById("mineNote").textContent =
-    points.length ? "Showing source-backed Alabama mine locations." : "No mines match the current filters.";
+    points.length ? "Showing clustered source-backed Alabama mine locations." : "No mines match the current filters.";
 
   document.getElementById("mineList").innerHTML = points.slice(0, 80).map(p => `
     <button class="map-record mine-row" data-id="${p.id}">
@@ -94,12 +103,7 @@ function renderMap() {
     row.addEventListener("click", () => {
       const p = points.find(x => x.id === row.dataset.id);
       if (!p) return;
-      map.setView([p.lat, p.lon], 13);
-      const marker = markers.find(m => {
-        const ll = m.getLatLng();
-        return Math.abs(ll.lat - p.lat) < 0.000001 && Math.abs(ll.lng - p.lon) < 0.000001;
-      });
-      if (marker) marker.openPopup();
+      map.setView([p.lat, p.lon], 14);
     });
   });
 

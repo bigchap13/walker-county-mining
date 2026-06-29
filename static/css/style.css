@@ -301,3 +301,31 @@ input {
   border: 0;
   color: inherit;
 }
+
+.mine-marker {
+  background: transparent;
+  border: 0;
+}
+
+.mine-marker span {
+  display: block;
+  width: 18px;
+  height: 18px;
+  border-radius: 99px;
+  border: 2px solid rgba(255,255,255,0.85);
+  box-shadow: 0 1px 6px rgba(0,0,0,0.45);
+}
+
+.marker-cluster-small,
+.marker-cluster-medium,
+.marker-cluster-large {
+  background-color: rgba(184, 134, 11, 0.28);
+}
+
+.marker-cluster-small div,
+.marker-cluster-medium div,
+.marker-cluster-large div {
+  background-color: rgba(184, 134, 11, 0.88);
+  color: #111;
+  font-weight: 900;
+}

@@ -1,1 +1,185 @@
-[]
+[
+  {
+    "id": "coal-camp-sipsey",
+    "name": "Sipsey",
+    "county": "Walker",
+    "state": "Alabama",
+    "type": "coal-mining company town",
+    "status": "historic community",
+    "company": "Maryland Coal and Coke Company; DeBardeleben Coal Company",
+    "railroad": null,
+    "years_active": "founded 1912; mine production began 1913",
+    "summary": "Sipsey was founded as a coal mine and associated company town in Walker County. The mine and town were founded in 1912 by the Maryland Coal and Coke Company, bought by Henry T. DeBardeleben in 1915, and connected to the DeBardeleben Coal Company.",
+    "mines": [
+      "msha-0102891"
+    ],
+    "sources": [
+      {
+        "title": "Sipsey Mine Workers, 1913",
+        "publisher": "Encyclopedia of Alabama",
+        "url": "https://encyclopediaofalabama.org/media/sipsey-mine-workers-1913/"
+      },
+      {
+        "title": "Major Coal Mining Towns of the Birmingham Mineral District: 1900-1920",
+        "publisher": "University of Alabama Maps",
+        "url": "https://alabamamaps.ua.edu/contemporarymaps/alabama/historical/weavcoa2.pdf"
+      }
+    ],
+    "research_status": "source_backed",
+    "last_updated": "2026-06-29"
+  },
+  {
+    "id": "coal-camp-aldridge",
+    "name": "Aldridge",
+    "county": "Walker",
+    "state": "Alabama",
+    "type": "early coal-mining town",
+    "status": "historic place",
+    "company": null,
+    "railroad": null,
+    "years_active": null,
+    "summary": "Aldridge is identified in the University of Alabama Walker County historic place notes as one of the earliest coal-mining towns in Walker County and also called Stith.",
+    "mines": [],
+    "sources": [
+      {
+        "title": "Walker County Current or Historic Place Locale Remarks",
+        "publisher": "University of Alabama Maps",
+        "url": "https://alabamamaps.ua.edu/historicalplaces/text/WalkerText.pdf"
+      }
+    ],
+    "research_status": "source_backed",
+    "last_updated": "2026-06-29"
+  },
+  {
+    "id": "coal-camp-carbon-hill",
+    "name": "Carbon Hill",
+    "county": "Walker",
+    "state": "Alabama",
+    "type": "major coal-mining town",
+    "status": "historic mining town",
+    "company": null,
+    "railroad": null,
+    "years_active": "listed for 1900-1920 mining-town context",
+    "summary": "Carbon Hill is identified on the University of Alabama map of major coal-mining towns of the Birmingham Mineral District for the 1900-1920 period.",
+    "mines": [],
+    "sources": [
+      {
+        "title": "Major Coal Mining Towns of the Birmingham Mineral District: 1900-1920",
+        "publisher": "University of Alabama Maps",
+        "url": "https://alabamamaps.ua.edu/contemporarymaps/alabama/historical/weavcoa2.pdf"
+      }
+    ],
+    "research_status": "source_backed",
+    "last_updated": "2026-06-29"
+  },
+  {
+    "id": "coal-camp-jasper",
+    "name": "Jasper",
+    "county": "Walker",
+    "state": "Alabama",
+    "type": "major coal-mining town",
+    "status": "historic mining town",
+    "company": null,
+    "railroad": null,
+    "years_active": "listed for 1900-1920 mining-town context",
+    "summary": "Jasper is identified on the University of Alabama map of major coal-mining towns of the Birmingham Mineral District for the 1900-1920 period.",
+    "mines": [],
+    "sources": [
+      {
+        "title": "Major Coal Mining Towns of the Birmingham Mineral District: 1900-1920",
+        "publisher": "University of Alabama Maps",
+        "url": "https://alabamamaps.ua.edu/contemporarymaps/alabama/historical/weavcoa2.pdf"
+      }
+    ],
+    "research_status": "source_backed",
+    "last_updated": "2026-06-29"
+  },
+  {
+    "id": "coal-camp-empire",
+    "name": "Empire",
+    "county": "Walker",
+    "state": "Alabama",
+    "type": "major coal-mining town",
+    "status": "historic mining town",
+    "company": null,
+    "railroad": null,
+    "years_active": "listed for 1900-1920 mining-town context",
+    "summary": "Empire is identified on the University of Alabama map of major coal-mining towns of the Birmingham Mineral District for the 1900-1920 period.",
+    "mines": [],
+    "sources": [
+      {
+        "title": "Major Coal Mining Towns of the Birmingham Mineral District: 1900-1920",
+        "publisher": "University of Alabama Maps",
+        "url": "https://alabamamaps.ua.edu/contemporarymaps/alabama/historical/weavcoa2.pdf"
+      }
+    ],
+    "research_status": "source_backed",
+    "last_updated": "2026-06-29"
+  },
+  {
+    "id": "coal-camp-dora",
+    "name": "Dora",
+    "county": "Walker",
+    "state": "Alabama",
+    "type": "major coal-mining town",
+    "status": "historic mining town",
+    "company": null,
+    "railroad": null,
+    "years_active": "listed for 1900-1920 mining-town context",
+    "summary": "Dora is identified on the University of Alabama map of major coal-mining towns of the Birmingham Mineral District for the 1900-1920 period.",
+    "mines": [],
+    "sources": [
+      {
+        "title": "Major Coal Mining Towns of the Birmingham Mineral District: 1900-1920",
+        "publisher": "University of Alabama Maps",
+        "url": "https://alabamamaps.ua.edu/contemporarymaps/alabama/historical/weavcoa2.pdf"
+      }
+    ],
+    "research_status": "source_backed",
+    "last_updated": "2026-06-29"
+  },
+  {
+    "id": "coal-camp-cordova",
+    "name": "Cordova",
+    "county": "Walker",
+    "state": "Alabama",
+    "type": "major coal-mining town",
+    "status": "historic mining town",
+    "company": null,
+    "railroad": null,
+    "years_active": "listed for 1900-1920 mining-town context",
+    "summary": "Cordova is identified on the University of Alabama map of major coal-mining towns of the Birmingham Mineral District for the 1900-1920 period.",
+    "mines": [],
+    "sources": [
+      {
+        "title": "Major Coal Mining Towns of the Birmingham Mineral District: 1900-1920",
+        "publisher": "University of Alabama Maps",
+        "url": "https://alabamamaps.ua.edu/contemporarymaps/alabama/historical/weavcoa2.pdf"
+      }
+    ],
+    "research_status": "source_backed",
+    "last_updated": "2026-06-29"
+  },
+  {
+    "id": "coal-camp-corona",
+    "name": "Corona",
+    "county": "Walker",
+    "state": "Alabama",
+    "type": "major coal-mining town",
+    "status": "historic mining town",
+    "company": null,
+    "railroad": null,
+    "years_active": "listed for 1900-1920 mining-town context",
+    "summary": "Corona is identified on the University of Alabama map of major coal-mining towns of the Birmingham Mineral District for the 1900-1920 period.",
+    "mines": [],
+    "sources": [
+      {
+        "title": "Major Coal Mining Towns of the Birmingham Mineral District: 1900-1920",
+        "publisher": "University of Alabama Maps",
+        "url": "https://alabamamaps.ua.edu/contemporarymaps/alabama/historical/weavcoa2.pdf"
+      }
+    ],
+    "research_status": "source_backed",
+    "last_updated": "2026-06-29"
+  }
+]
